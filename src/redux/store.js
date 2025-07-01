@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from "../redux/slices/authSlice";
-import quoteImageReducer from "../redux/slices/authSlice";
+import quoteImageReducer from "../redux/slices/quoteImageSlice";
 import quoteCategoryReducer from "../redux/slices/quoteCategorySlice"
 import favQuoteReducer from "../redux/slices/favQuoteSlice";
 import userReducer from "../redux/slices/userSlice";

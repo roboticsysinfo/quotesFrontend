@@ -8,11 +8,26 @@ import UploadQouteImagePage from "./pages/UploadQouteImagePage";
 import QuoteCategoryPage from "./pages/QuoteCategoryPage";
 import StatusPage from "./pages/StatusPage";
 import QuoteImagePage from "./pages/QuoteImagePage";
+import { useDispatch } from "react-redux";
+import { setUser } from "./redux/slices/authSlice";
+import { useEffect } from "react";
 
 function App() {
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+
+    if (user && token) {
+      dispatch(setUser({ user: JSON.parse(user), token }));
+    }
+  }, [dispatch]);
+
+
   return (
-    
+
     <BrowserRouter>
       <RouteScrollToTop />
       <Routes>

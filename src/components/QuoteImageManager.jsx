@@ -7,6 +7,7 @@ import {
 } from '../redux/slices/quoteImageSlice';
 import { toast } from 'react-toastify';
 import { FaTrash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const QuoteImageManager = () => {
   const dispatch = useDispatch();
@@ -35,8 +36,15 @@ const QuoteImageManager = () => {
   };
 
   return (
+
     <div className="container mt-4">
-      <h4 className="mb-3">All Quote Images</h4>
+      {/* Header */}
+      <div className="d-flex justify-content-between align-items-center mb-40">
+        <h4 className="mb-0">All Quotes Images</h4>
+          <Link to="/upload-quote-image" className="btn btn-primary">
+            Upload Quote Image
+          </Link>
+      </div>
 
       {loading && <p>Loading...</p>}
       {!loading && images.length === 0 && <p>No quote images found.</p>}
@@ -46,7 +54,7 @@ const QuoteImageManager = () => {
           <div className="col-md-4 mb-4" key={img._id}>
             <div className="card shadow-sm">
               <img
-                src={img.image}
+                src={`${process.env.REACT_APP_UPLOADS_URL}${img.image}`}
                 alt="Quote"
                 className="card-img-top"
                 style={{ height: '250px', objectFit: 'cover' }}
