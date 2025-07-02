@@ -1,26 +1,24 @@
 import React from "react";
 import MasterLayout from "../masterLayout/MasterLayout";
 import Breadcrumb from "../components/Breadcrumb";
-import QuoteImageManager from "../components/QuoteImageManager";
+import UploadQuoteForm from "../components/UploadQuoteForm";
 
 
-
-const QuoteImagePage = () => {
+const UploadQuotePage = () => {
   return (
     <>
-
       {/* MasterLayout */}
       <MasterLayout>
 
         {/* Breadcrumb */}
-        <Breadcrumb title="Image Quotes" />
+        <Breadcrumb title="Upload Quote" />
 
-        <QuoteImageManager />
+        <UploadQuoteForm />
+
 
       </MasterLayout>
-
     </>
   );
 };
 
-export default QuoteImagePage; 
+export default UploadQuotePage;

@@ -4,13 +4,13 @@ import ErrorPage from "./pages/ErrorPage";
 import RouteScrollToTop from "./helper/RouteScrollToTop";
 import PrivateRoute from "./components/PrivateRoute"; // 👈 Add this
 import SignInPage from "./pages/SignInPage";
-import UploadQouteImagePage from "./pages/UploadQouteImagePage";
 import QuoteCategoryPage from "./pages/QuoteCategoryPage";
 import StatusPage from "./pages/StatusPage";
-import QuoteImagePage from "./pages/QuoteImagePage";
 import { useDispatch } from "react-redux";
 import { setUser } from "./redux/slices/authSlice";
 import { useEffect } from "react";
+import UploadQuotePage from "./pages/UploadQuotePage";
+import QuotesListPage from "./pages/QuotesListPage";
 
 function App() {
 
@@ -40,12 +40,13 @@ function App() {
         </Route>
 
         <Route element={<PrivateRoute />}>
-          <Route path="/upload-quote-image" element={<UploadQouteImagePage />} />
+          <Route path="/upload-quote" element={<UploadQuotePage />} />
         </Route>
 
         <Route element={<PrivateRoute />}>
-          <Route path="/image-quotes-list" element={<QuoteImagePage />} />
+          <Route path="/quotes-list" element={<QuotesListPage />} />
         </Route>
+
 
         <Route element={<PrivateRoute />}>
           <Route path="/manage-categories" element={<QuoteCategoryPage />} />

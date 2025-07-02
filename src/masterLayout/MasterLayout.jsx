@@ -140,13 +140,13 @@ const MasterLayout = ({ children }) => {
 
             <li>
               <NavLink
-                to='/image-quotes-list'
+                to='/quotes-list'
                 className={(navData) =>
                   navData.isActive ? "active-page" : ""
                 }
               >
                 <i className='ri-circle-fill circle-icon text-primary-600 w-auto' />
-                Image Quotes
+                Image/Video Quotes
               </NavLink>
             </li>
 
