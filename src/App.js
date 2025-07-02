@@ -11,6 +11,7 @@ import { setUser } from "./redux/slices/authSlice";
 import { useEffect } from "react";
 import UploadQuotePage from "./pages/UploadQuotePage";
 import QuotesListPage from "./pages/QuotesListPage";
+import UsersListPage from "./pages/UsersListPage";
 
 function App() {
 
@@ -54,6 +55,10 @@ function App() {
 
         <Route element={<PrivateRoute />}>
           <Route path="/manage-status" element={<StatusPage />} />
+        </Route>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/users" element={<UsersListPage />} />
         </Route>
 
         {/* ❌ Fallback */}

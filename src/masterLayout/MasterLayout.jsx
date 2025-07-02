@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import ThemeToggleButton from "../helper/ThemeToggleButton";
+import { useSelector } from "react-redux";
+import { logout } from "../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const MasterLayout = ({ children }) => {
 
   let [sidebarActive, seSidebarActive] = useState(false);
   let [mobileMenu, setMobileMenu] = useState(false);
   const location = useLocation(); // Hook to get the current route
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
 
@@ -86,6 +94,22 @@ const MasterLayout = ({ children }) => {
 
   let mobileMenuControl = () => {
     setMobileMenu(!mobileMenu);
+  };
+
+
+  const handleLogout = () => {
+    // Clear localStorage values
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    // Dispatch logout action
+    dispatch(logout());
+
+    // Show toast
+    toast.success('Logout successful');
+
+    // Navigate to login
+    navigate('/login');
   };
 
   return (
@@ -174,6 +198,18 @@ const MasterLayout = ({ children }) => {
               </NavLink>
             </li>
 
+            <li>
+              <NavLink
+                to='/users'
+                className={(navData) =>
+                  navData.isActive ? "active-page" : ""
+                }
+              >
+                <i className='ri-circle-fill circle-icon text-primary-600 w-auto' />
+                Users
+              </NavLink>
+            </li>
+
 
           </ul>
         </div>
@@ -237,7 +273,7 @@ const MasterLayout = ({ children }) => {
                     <div className='py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2'>
                       <div>
                         <h6 className='text-lg text-primary-light fw-semibold mb-2'>
-                          Shaidul Islam
+                          {user?.name}
                         </h6>
                         <span className='text-secondary-light fw-medium text-sm'>
                           Admin
@@ -251,46 +287,11 @@ const MasterLayout = ({ children }) => {
                       </button>
                     </div>
                     <ul className='to-top-list'>
-                      <li>
-                        <Link
-                          className='dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3'
-                          to='/view-profile'
-                        >
-                          <Icon
-                            icon='solar:user-linear'
-                            className='icon text-xl'
-                          />{" "}
-                          My Profile
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          className='dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3'
-                          to='/email'
-                        >
-                          <Icon
-                            icon='tabler:message-check'
-                            className='icon text-xl'
-                          />{" "}
-                          Inbox
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          className='dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3'
-                          to='/company'
-                        >
-                          <Icon
-                            icon='icon-park-outline:setting-two'
-                            className='icon text-xl'
-                          />
-                          Setting
-                        </Link>
-                      </li>
+
                       <li>
                         <Link
                           className='dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-danger d-flex align-items-center gap-3'
-                          to='#'
+                          onClick={handleLogout}
                         >
                           <Icon icon='lucide:power' className='icon text-xl' />{" "}
                           Log Out
@@ -312,12 +313,7 @@ const MasterLayout = ({ children }) => {
         <footer className='d-footer'>
           <div className='row align-items-center justify-content-between'>
             <div className='col-auto'>
-              <p className='mb-0'>© 2024 WowDash. All Rights Reserved.</p>
-            </div>
-            <div className='col-auto'>
-              <p className='mb-0'>
-                Made by <span className='text-primary-600'>wowtheme7</span>
-              </p>
+              <p className='mb-0'>© 2025 QuoteVaani. All Rights Reserved.</p>
             </div>
           </div>
         </footer>

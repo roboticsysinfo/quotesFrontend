@@ -7,7 +7,7 @@ export const fetchAllUsers = createAsyncThunk(
     'users/fetchAll',
     async (_, { rejectWithValue }) => {
         try {
-            const res = await api.get('/users');
+            const res = await api.get('/all-users');
             return res.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data?.message || 'Failed to fetch users');
@@ -52,7 +52,7 @@ export const deleteUserById = createAsyncThunk(
     'users/delete',
     async (id, { rejectWithValue }) => {
         try {
-            await api.delete(`/users/${id}`);
+            await api.delete(`/delete/user/${id}`);
             return id;
         } catch (error) {
             return rejectWithValue(error.response?.data?.message || 'Failed to delete user');

@@ -1,7 +1,7 @@
 import React from "react";
 import MasterLayout from "../masterLayout/MasterLayout";
 import Breadcrumb from "../components/Breadcrumb";
-import UsersListLayer from "../components/UsersListLayer";
+import UsersList from "../components/UsersList";
 
 
 const UsersListPage = () => {
@@ -12,10 +12,10 @@ const UsersListPage = () => {
       <MasterLayout>
 
         {/* Breadcrumb */}
-        <Breadcrumb title="Users Grid" />
+        <Breadcrumb title="Users" />
 
         {/* UsersListLayer */}
-        <UsersListLayer />
+        <UsersList />
 
       </MasterLayout>
 
