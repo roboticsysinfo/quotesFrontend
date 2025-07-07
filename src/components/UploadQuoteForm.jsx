@@ -19,14 +19,18 @@ const UploadQuoteForm = () => {
   const [catList, setCatList] = useState([]);
   const [uploading, setUploading] = useState(false); // ⬅️ New state
 
+
   useEffect(() => {
     fetchLangs();
     fetchCats();
   }, []);
 
+
   const fetchLangs = async () => {
     try {
       const res = await api.get("/languages");
+      console.log("lang res api", res.data.data);
+      
       setLangList(res.data.data);
     } catch {
       toast.error("Failed to load languages");
@@ -111,24 +115,6 @@ const UploadQuoteForm = () => {
                 {langList.map((lang) => (
                   <option key={lang._id} value={lang._id}>
                     {lang.languageName}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Category Dropdown */}
-            <div className="mb-3">
-              <label className="form-label">Select Category</label>
-              <select
-                name="categoryId"
-                className="form-select"
-                value={formData.categoryId}
-                onChange={handleChange}
-              >
-                <option value="">-- Select Category --</option>
-                {catList.map((cat) => (
-                  <option key={cat._id} value={cat._id}>
-                    {cat.name}
                   </option>
                 ))}
               </select>
