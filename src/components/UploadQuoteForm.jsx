@@ -30,7 +30,7 @@ const UploadQuoteForm = () => {
     try {
       const res = await api.get("/languages");
       console.log("lang res api", res.data.data);
-      
+
       setLangList(res.data.data);
     } catch {
       toast.error("Failed to load languages");
@@ -119,6 +119,24 @@ const UploadQuoteForm = () => {
                 ))}
               </select>
             </div>
+
+            <div className="mb-3">
+              <label className="form-label">Select Category</label>
+              <select
+                name="categoryId"
+                className="form-select"
+                value={formData.categoryId}
+                onChange={handleChange}
+              >
+                <option value="">-- Select Category --</option>
+                {Array.isArray(catList) && catList.map((cat) => (
+                  <option key={cat._id} value={cat._id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
 
             {/* Media Type */}
             <div className="mb-3">
