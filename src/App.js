@@ -12,6 +12,11 @@ import { useEffect } from "react";
 import UploadQuotePage from "./pages/UploadQuotePage";
 import QuotesListPage from "./pages/QuotesListPage";
 import UsersListPage from "./pages/UsersListPage";
+import LeaderboardPage from "./pages/LeaderboardPage";
+import ProductListPage from "./pages/ProductListPage";
+import RedeemProductHistoryPage from "./pages/RedeemProductHistoryPage";
+import InvoicePage from "./pages/InvoicePage";
+import UserPointsTxnHistoryPage from "./pages/UserPointsTxnHistoryPage";
 
 function App() {
 
@@ -30,7 +35,9 @@ function App() {
   return (
 
     <BrowserRouter>
+
       <RouteScrollToTop />
+
       <Routes>
 
         <Route path="/login" element={<SignInPage />} />
@@ -48,7 +55,6 @@ function App() {
           <Route path="/quotes-list" element={<QuotesListPage />} />
         </Route>
 
-
         <Route element={<PrivateRoute />}>
           <Route path="/manage-categories" element={<QuoteCategoryPage />} />
         </Route>
@@ -59,6 +65,28 @@ function App() {
 
         <Route element={<PrivateRoute />}>
           <Route path="/users" element={<UsersListPage />} />
+        </Route>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+        </Route>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/points-transaction-history/:id" element={<UserPointsTxnHistoryPage />} />
+        </Route>
+
+        
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/products" element={<ProductListPage />} />
+        </Route>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/product-redeem-history" element={<RedeemProductHistoryPage />} />
+        </Route>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/view-invoice/:BillNo" element={<InvoicePage />} />
         </Route>
 
         {/* ❌ Fallback */}

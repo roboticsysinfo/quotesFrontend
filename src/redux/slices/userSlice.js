@@ -15,18 +15,13 @@ export const fetchAllUsers = createAsyncThunk(
     }
 );
 
+
 // 🔹 2. Get user by ID
 export const getUserById = createAsyncThunk(
     'users/getById',
     async (id, { rejectWithValue }) => {
         try {
-
-            console.log(" id", id);
-            
             const res = await api.get(`/user/by-userid/${id}`);
-            
-            console.log("user get by id response", res.data.data);
-            
             return res.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data?.message || 'Failed to fetch user');
@@ -60,7 +55,7 @@ export const deleteUserById = createAsyncThunk(
     }
 );
 
-// 🔹 5. Update own profile (with optional file upload)
+// 🔹 5. Update own profile
 export const updateOwnProfile = createAsyncThunk(
     'users/updateOwnProfile',
     async (formData, { rejectWithValue }) => {
@@ -75,12 +70,44 @@ export const updateOwnProfile = createAsyncThunk(
     }
 );
 
+// 🔹 6. Get leaderboard
+export const fetchLeaderboard = createAsyncThunk(
+    'users/fetchLeaderboard',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await api.get('/get/leaderboard');
+            return res.data.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || 'Failed to fetch leaderboard');
+        }
+    }
+);
+
+// 🔹 7. Get user points history
+export const getUserPointsHistory = createAsyncThunk(
+    'users/getUserPointsHistory',
+    async (userId, { rejectWithValue }) => {
+        try {
+            const res = await api.get(`/user/points-transactions-history/${userId}`);
+            return res.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || 'Failed to fetch points history');
+        }
+    }
+);
+
 // 🧠 Slice definition
 const userSlice = createSlice({
     name: 'users',
     initialState: {
         users: [],
         selectedUser: null,
+        leaderboard: [],
+        pointsHistory: {
+            referralCode: '',
+            points: 0,
+            data: [],
+        },
         loading: false,
         error: null,
         successMessage: null,
@@ -127,11 +154,39 @@ const userSlice = createSlice({
             })
 
             // Update Own Profile
-            .addCase(updateOwnProfile.fulfilled, (state, action) => {
+            .addCase(updateOwnProfile.fulfilled, (state) => {
                 state.successMessage = 'Profile updated successfully';
             })
 
-            // Errors
+            // Leaderboard
+            .addCase(fetchLeaderboard.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchLeaderboard.fulfilled, (state, action) => {
+                state.loading = false;
+                state.leaderboard = action.payload;
+            })
+            .addCase(fetchLeaderboard.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            // Get User Points History
+            .addCase(getUserPointsHistory.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getUserPointsHistory.fulfilled, (state, action) => {
+                state.loading = false;
+                state.pointsHistory = action.payload;
+            })
+            .addCase(getUserPointsHistory.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            // Generic Error Handling
             .addMatcher(
                 (action) => action.type.startsWith('users/') && action.type.endsWith('/rejected'),
                 (state, action) => {

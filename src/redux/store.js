@@ -5,7 +5,8 @@ import quoteCategoryReducer from "../redux/slices/quoteCategorySlice"
 import favQuoteReducer from "../redux/slices/favQuoteSlice";
 import userReducer from "../redux/slices/userSlice";
 import statusReducer from "../redux/slices/statusSlice";
-import quotesReducer from "../redux/slices/quotesSlice"
+import quotesReducer from "../redux/slices/quotesSlice";
+import redeemProductReducer from "../redux/slices/redeemProductSlice"
 
 const store = configureStore({
 
@@ -18,7 +19,7 @@ const store = configureStore({
     favourites: favQuoteReducer,
     status: statusReducer,
     quotes: quotesReducer,
-
+    redeem : redeemProductReducer
   },
 
 });

@@ -210,6 +210,42 @@ const MasterLayout = ({ children }) => {
               </NavLink>
             </li>
 
+            <li>
+              <NavLink
+                to='/leaderboard'
+                className={(navData) =>
+                  navData.isActive ? "active-page" : ""
+                }
+              >
+                <i className='ri-circle-fill circle-icon text-primary-600 w-auto' />
+                Leaderboard
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to='/products'
+                className={(navData) =>
+                  navData.isActive ? "active-page" : ""
+                }
+              >
+                <i className='ri-circle-fill circle-icon text-primary-600 w-auto' />
+                Products
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to='/product-redeem-history'
+                className={(navData) =>
+                  navData.isActive ? "active-page" : ""
+                }
+              >
+                <i className='ri-circle-fill circle-icon text-primary-600 w-auto' />
+                Product Redeem History
+              </NavLink>
+            </li>
+
 
           </ul>
         </div>

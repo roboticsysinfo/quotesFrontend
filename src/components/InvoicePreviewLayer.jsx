@@ -130,30 +130,7 @@ const InvoicePreviewLayer = () => {
                                                     <td>$200</td>
                                                     <td className="text-end">$1000.00</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>02</td>
-                                                    <td>Apple's Shoes</td>
-                                                    <td>5</td>
-                                                    <td>PC</td>
-                                                    <td>$200</td>
-                                                    <td className="text-end">$1000.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>03</td>
-                                                    <td>Apple's Shoes</td>
-                                                    <td>5</td>
-                                                    <td>PC</td>
-                                                    <td>$200</td>
-                                                    <td className="text-end">$1000.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>04</td>
-                                                    <td>Apple's Shoes</td>
-                                                    <td>5</td>
-                                                    <td>PC</td>
-                                                    <td>$200</td>
-                                                    <td className="text-end">$1000.00</td>
-                                                </tr>
+           
                                             </tbody>
                                         </table>
                                     </div>

@@ -5,9 +5,6 @@ import api from '../../services/api';
 export const uploadStatus = createAsyncThunk('/upload-status', async (formData, { rejectWithValue }) => {
   try {
 
-    console.log(" formdata", formData);
-    
-
     const res = await api.post('/upload-status', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
