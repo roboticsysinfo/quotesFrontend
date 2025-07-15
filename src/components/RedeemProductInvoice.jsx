@@ -113,11 +113,8 @@ const RedeemProductInvoice = () => {
                         <h6 className="fw-bold">BILL TO</h6>
                         <p className="mb-0">{invoiceData?.snapshot?.userName || 'Customer name'}</p>
                         <p className="mb-0">{invoiceData?.snapshot?.userEmail || 'Email address'}</p>
-                        {/* <p className="mb-0">{farmer.phoneNumber || 'Phone number'}</p>
-                        <p className="mb-0">{farmer.address || 'Street address'}</p>
-                        <p className="mb-0">{farmer.state}</p>
-                        <p className="mb-0">{farmer.city_district}</p>
-                        <p className="mb-0">{farmer.registrationNumber || 'Reg No.'}</p> */}
+                        <p className="mb-0">{invoiceData?.snapshot?.userPhone || 'Phone number'}</p>
+                        <p className="mb-0">{invoiceData?.snapshot?.userAddress || 'Street address'}</p>
                     </div>
 
                 </div>
