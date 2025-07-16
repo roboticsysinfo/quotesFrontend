@@ -10,12 +10,10 @@ const UserPointsTxnHistoryList = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-
   const { pointsHistory, loading } = useSelector((state) => state.users);
   const transactions = pointsHistory?.data || [];
   const points = pointsHistory?.points || 0;
   const referralCode = pointsHistory?.referralCode || 'N/A';
-
 
   useEffect(() => {
     if (id) {
@@ -27,14 +25,26 @@ const UserPointsTxnHistoryList = () => {
     .filter((t) => t.type === 'redeem')
     .reduce((sum, item) => sum + item.deductedPoints, 0);
 
+  const getBadgeClass = (type) => {
+    switch (type) {
+      case 'referral': return 'bg-primary';
+      case 'redeem': return 'bg-danger';
+      case 'quote': return 'bg-warning';
+      default: return 'bg-secondary';
+    }
+  };
+
+  const getPointPrefix = (type) => type === 'redeem' ? '-' : '+';
+
   return (
     <div className="container mt-4">
+
       {/* 🔹 Summary Cards */}
       <div className="row mb-4">
         <div className="col-md-3">
           <div className="card text-center border-success shadow-sm">
             <div className="card-body">
-              <div className="fw-bold fs-5 text-success"><GiTwoCoins className='cardicon' /> {points || 0}</div>
+              <div className="fw-bold fs-5 text-success"><GiTwoCoins className='cardicon' /> {points}</div>
               <div className="text-muted small">Total Points</div>
             </div>
           </div>
@@ -42,7 +52,7 @@ const UserPointsTxnHistoryList = () => {
         <div className="col-md-3">
           <div className="card text-center border-primary shadow-sm">
             <div className="card-body">
-              <div className="fw-bold fs-5 text-primary"><FaRegIdCard className='cardicon' /> {referralCode || 'N/A'}</div>
+              <div className="fw-bold fs-5 text-primary"><FaRegIdCard className='cardicon' /> {referralCode}</div>
               <div className="text-muted small">Referral Code</div>
             </div>
           </div>
@@ -92,14 +102,11 @@ const UserPointsTxnHistoryList = () => {
                       <td>{item.description}</td>
                       <td>
                         <strong className={item.type === 'redeem' ? 'text-danger' : 'text-success'}>
-                          -{item.deductedPoints}
+                          {getPointPrefix(item.type)}{item.deductedPoints}
                         </strong>
                       </td>
                       <td>
-                        <span
-                          className={`badge ${item.type === 'referral' ? 'bg-primary' : 'bg-danger'
-                            }`}
-                        >
+                        <span className={`badge ${getBadgeClass(item.type)}`}>
                           {item.type}
                         </span>
                       </td>
