@@ -17,6 +17,7 @@ import ProductListPage from "./pages/ProductListPage";
 import RedeemProductHistoryPage from "./pages/RedeemProductHistoryPage";
 import InvoicePage from "./pages/InvoicePage";
 import UserPointsTxnHistoryPage from "./pages/UserPointsTxnHistoryPage";
+import EditQoutesPage from "./pages/EditQoutesPage";
 
 function App() {
 
@@ -75,8 +76,6 @@ function App() {
           <Route path="/points-transaction-history/:id" element={<UserPointsTxnHistoryPage />} />
         </Route>
 
-        
-
         <Route element={<PrivateRoute />}>
           <Route path="/products" element={<ProductListPage />} />
         </Route>
@@ -87,6 +86,10 @@ function App() {
 
         <Route element={<PrivateRoute />}>
           <Route path="/view-invoice/:BillNo" element={<InvoicePage />} />
+        </Route>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/edit-quote/:id" element={<EditQoutesPage />} />
         </Route>
 
         {/* ❌ Fallback */}

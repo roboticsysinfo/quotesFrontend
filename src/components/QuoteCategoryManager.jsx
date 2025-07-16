@@ -4,10 +4,11 @@ import {
   fetchQuoteCategories,
   createQuoteCategory,
   deleteQuoteCategory,
+  updateQuoteCategory,
 } from '../redux/slices/quoteCategorySlice';
 import { toast } from 'react-toastify';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaEdit } from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
 
 function QuoteCategoryManager() {
@@ -15,25 +16,38 @@ function QuoteCategoryManager() {
   const { categories, loading } = useSelector((state) => state.quoteCategories);
 
   const [showModal, setShowModal] = useState(false);
-  const [newCategory, setNewCategory] = useState('');
+  const [categoryName, setCategoryName] = useState('');
+  const [editMode, setEditMode] = useState(false);
+  const [editId, setEditId] = useState(null);
 
   useEffect(() => {
     dispatch(fetchQuoteCategories());
   }, [dispatch]);
 
-  const handleAdd = async () => {
-    if (!newCategory.trim()) {
+  const handleSave = async () => {
+    if (!categoryName.trim()) {
       toast.error('Please enter a category name');
       return;
     }
 
-    const result = await dispatch(createQuoteCategory({ name: newCategory }));
-    if (result.meta.requestStatus === 'fulfilled') {
-      toast.success('Category added');
-      setNewCategory('');
-      setShowModal(false);
+    if (editMode) {
+      const result = await dispatch(updateQuoteCategory({ id: editId, name: categoryName }));
+      if (result.meta.requestStatus === 'fulfilled') {
+        toast.success('Category updated');
+        setShowModal(false);
+        resetModal();
+      } else {
+        toast.error(result.payload || 'Failed to update category');
+      }
     } else {
-      toast.error(result.payload || 'Failed to create category');
+      const result = await dispatch(createQuoteCategory({ name: categoryName }));
+      if (result.meta.requestStatus === 'fulfilled') {
+        toast.success('Category added');
+        setShowModal(false);
+        resetModal();
+      } else {
+        toast.error(result.payload || 'Failed to create category');
+      }
     }
   };
 
@@ -46,12 +60,25 @@ function QuoteCategoryManager() {
     }
   };
 
+  const handleEdit = (cat) => {
+    setEditMode(true);
+    setEditId(cat._id);
+    setCategoryName(cat.name);
+    setShowModal(true);
+  };
+
+  const resetModal = () => {
+    setCategoryName('');
+    setEditId(null);
+    setEditMode(false);
+  };
+
   return (
     <div className="container mt-5">
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h4 className="mb-0">All Categories</h4>
-        <Button variant="primary" onClick={() => setShowModal(true)}>
+        <Button variant="primary" onClick={() => { resetModal(); setShowModal(true); }}>
           Add Category
         </Button>
       </div>
@@ -66,11 +93,18 @@ function QuoteCategoryManager() {
               <div className="card shadow-sm bg-light">
                 <div className="card-body d-flex justify-content-between align-items-center">
                   <strong>{cat.name}</strong>
-                  <FaTrash
-                    className="text-danger"
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => handleDelete(cat._id)}
-                  />
+                  <div className="d-flex gap-2">
+                    <FaEdit
+                      className="text-primary"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => handleEdit(cat)}
+                    />
+                    <FaTrash
+                      className="text-danger"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => handleDelete(cat._id)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -80,25 +114,25 @@ function QuoteCategoryManager() {
         )}
       </div>
 
-      {/* Add Category Modal */}
+      {/* Add/Edit Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Category</Modal.Title>
+          <Modal.Title>{editMode ? 'Edit Category' : 'Add New Category'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Control
             type="text"
             placeholder="Category name"
-            value={newCategory}
-            onChange={(e) => setNewCategory(e.target.value)}
+            value={categoryName}
+            onChange={(e) => setCategoryName(e.target.value)}
           />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleAdd}>
-            Add
+          <Button variant="primary" onClick={handleSave}>
+            {editMode ? 'Update' : 'Add'}
           </Button>
         </Modal.Footer>
       </Modal>

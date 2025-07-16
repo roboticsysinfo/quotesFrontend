@@ -7,11 +7,10 @@ import {
 } from '../redux/slices/quotesSlice';
 import { fetchQuoteCategories } from '../redux/slices/quoteCategorySlice';
 import { toast } from 'react-toastify';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaEdit } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const QuotesList = () => {
-
   const dispatch = useDispatch();
   const { quotes, loading, error, successMessage } = useSelector((state) => state.quotes);
   const { categories } = useSelector((state) => state.quoteCategories);
@@ -19,15 +18,11 @@ const QuotesList = () => {
   const [typeFilter, setTypeFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
 
-
-
-  // Fetch on mount
   useEffect(() => {
     dispatch(fetchQuotes());
     dispatch(fetchQuoteCategories());
   }, [dispatch]);
 
-  // Show toast
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -53,7 +48,6 @@ const QuotesList = () => {
 
   return (
     <div className="container mt-4">
-
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h4 className="mb-0">All Quotes (Image + Video)</h4>
       </div>
@@ -80,23 +74,20 @@ const QuotesList = () => {
         </div>
 
         <div className="col-md-4 text-end">
-            <Link to="/upload-quote" className='btn btn-primary w-200'>
-              Upload New Quote
-            </Link>
+          <Link to="/upload-quote" className='btn btn-primary w-200'>
+            Upload New Quote
+          </Link>
         </div>
-
       </div>
 
       <hr style={{ marginTop: 15, marginBottom: 15 }} />
 
-      {/* Loader */}
       {loading && <p>Loading...</p>}
 
-      {/* Cards */}
       <div className="row">
         {filteredQuotes.length === 0 && !loading && <p>No quotes found for selected filters.</p>}
         {filteredQuotes.map((q) => (
-          <div className="col-md-4 mb-4" key={q._id}>
+          <div className="col-md-4 mb-40" key={q._id}>
             <div className="card shadow-sm">
               {q.type === 'image' ? (
                 <img
@@ -117,16 +108,21 @@ const QuotesList = () => {
               )}
 
               <div className="card-body d-flex justify-content-between align-items-center">
-                <div className='d-flex' style={{gap: 20}}>
+                <div className='d-flex' style={{ gap: 20 }}>
                   <span className="badge bg-secondary">{q.type.toUpperCase()}</span>
                   <span className="text-sm">{q.categoryId?.name}</span>
                 </div>
-                <FaTrash
-                  className="text-danger"
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => handleDelete(q._id)}
-                  title="Delete"
-                />
+                <div className="d-flex align-items-center" style={{ gap: 15 }}>
+                  <Link to={`/edit-quote/${q._id}`} title="Edit">
+                    <FaEdit className="text-primary" style={{ cursor: 'pointer' }} />
+                  </Link>
+                  <FaTrash
+                    className="text-danger"
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => handleDelete(q._id)}
+                    title="Delete"
+                  />
+                </div>
               </div>
             </div>
           </div>
