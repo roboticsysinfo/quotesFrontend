@@ -29,7 +29,7 @@ const UserPointsTxnHistoryList = () => {
     switch (type) {
       case 'referral': return 'bg-primary';
       case 'redeem': return 'bg-danger';
-      case 'quote': return 'bg-warning';
+      case 'quote': return 'bg-success'
       default: return 'bg-secondary';
     }
   };

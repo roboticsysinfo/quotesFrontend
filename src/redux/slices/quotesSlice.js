@@ -19,11 +19,13 @@ export const fetchQuotesByCategory = createAsyncThunk('quotes/byCategory', async
   return res.data.data;
 });
 
+
 // ✅ Get quotes by language
 export const fetchQuotesByLanguage = createAsyncThunk('quotes/byLanguage', async (langId) => {
   const res = await api.get(`/quotes/by-language/${langId}`);
   return res.data.data;
 });
+
 
 // ✅ Upload quote (image/video)
 export const uploadQuote = createAsyncThunk('quotes/upload', async (formData) => {
@@ -32,6 +34,7 @@ export const uploadQuote = createAsyncThunk('quotes/upload', async (formData) =>
   });
   return res.data.data;
 });
+
 
 // ✅ Update quote
 export const updateQuote = createAsyncThunk('quotes/update', async ({ id, data }) => {
