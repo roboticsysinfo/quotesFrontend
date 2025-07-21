@@ -30,15 +30,19 @@ export const createQuoteCategory = createAsyncThunk(
 // ✅ Update a category
 export const updateQuoteCategory = createAsyncThunk(
   'quoteCategories/update',
-  async ({ id, name }, thunkAPI) => {
+  async ({ id, name, isFeatured }, thunkAPI) => {
     try {
-      const res = await api.put(`/update/category/${id}`, { name });
-      return res.data.data;
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to update category');
+      const response = await api.put(`/update/category/${id}`, {
+        name,
+        isFeatured,
+      });
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || 'Update failed');
     }
   }
 );
+
 
 // ✅ Delete a category
 export const deleteQuoteCategory = createAsyncThunk(

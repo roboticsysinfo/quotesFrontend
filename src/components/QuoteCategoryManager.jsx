@@ -17,6 +17,7 @@ function QuoteCategoryManager() {
 
   const [showModal, setShowModal] = useState(false);
   const [categoryName, setCategoryName] = useState('');
+  const [isFeatured, setIsFeatured] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
 
@@ -30,24 +31,27 @@ function QuoteCategoryManager() {
       return;
     }
 
+    const payload = {
+      name: categoryName,
+      isFeatured: isFeatured,
+    };
+
+    console.log("payload", payload);
+    
+
+    let result;
     if (editMode) {
-      const result = await dispatch(updateQuoteCategory({ id: editId, name: categoryName }));
-      if (result.meta.requestStatus === 'fulfilled') {
-        toast.success('Category updated');
-        setShowModal(false);
-        resetModal();
-      } else {
-        toast.error(result.payload || 'Failed to update category');
-      }
+      result = await dispatch(updateQuoteCategory({ id: editId, ...payload }));
     } else {
-      const result = await dispatch(createQuoteCategory({ name: categoryName }));
-      if (result.meta.requestStatus === 'fulfilled') {
-        toast.success('Category added');
-        setShowModal(false);
-        resetModal();
-      } else {
-        toast.error(result.payload || 'Failed to create category');
-      }
+      result = await dispatch(createQuoteCategory(payload));
+    }
+
+    if (result.meta.requestStatus === 'fulfilled') {
+      toast.success(editMode ? 'Category updated' : 'Category added');
+      setShowModal(false);
+      resetModal();
+    } else {
+      toast.error(result.payload || (editMode ? 'Failed to update category' : 'Failed to create category'));
     }
   };
 
@@ -64,18 +68,19 @@ function QuoteCategoryManager() {
     setEditMode(true);
     setEditId(cat._id);
     setCategoryName(cat.name);
+    setIsFeatured(cat.isFeatured || false);
     setShowModal(true);
   };
 
   const resetModal = () => {
     setCategoryName('');
+    setIsFeatured(false);
     setEditId(null);
     setEditMode(false);
   };
 
   return (
     <div className="container mt-5">
-      {/* Header */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h4 className="mb-0">All Categories</h4>
         <Button variant="primary" onClick={() => { resetModal(); setShowModal(true); }}>
@@ -83,7 +88,6 @@ function QuoteCategoryManager() {
         </Button>
       </div>
 
-      {/* Category List */}
       <div className="row">
         {loading ? (
           <p>Loading...</p>
@@ -92,7 +96,12 @@ function QuoteCategoryManager() {
             <div className="col-md-4 mb-3" key={cat._id}>
               <div className="card shadow-sm bg-light">
                 <div className="card-body d-flex justify-content-between align-items-center">
-                  <strong>{cat.name}</strong>
+                  <div>
+                    <strong>{cat.name}</strong>
+                    {cat.isFeatured && (
+                      <span className="badge bg-success ms-2">Featured</span>
+                    )}
+                  </div>
                   <div className="d-flex gap-2">
                     <FaEdit
                       className="text-primary"
@@ -114,18 +123,29 @@ function QuoteCategoryManager() {
         )}
       </div>
 
-      {/* Add/Edit Modal */}
+      {/* Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>{editMode ? 'Edit Category' : 'Add New Category'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form.Control
-            type="text"
-            placeholder="Category name"
-            value={categoryName}
-            onChange={(e) => setCategoryName(e.target.value)}
-          />
+          <Form.Group className="mb-3">
+            <Form.Label>Category Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Category name"
+              value={categoryName}
+              onChange={(e) => setCategoryName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group controlId="formIsFeatured">
+            <Form.Check
+              type="checkbox"
+              label="Is Featured?"
+              checked={isFeatured}
+              onChange={(e) => setIsFeatured(e.target.checked)}
+            />
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
