@@ -5,9 +5,10 @@ import {
     deleteUserById,
 } from '../redux/slices/userSlice';
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { Link } from 'react-router-dom';
 
 const UsersList = () => {
-    
+
     const dispatch = useDispatch();
     const { users, loading } = useSelector((state) => state.users);
     const [searchTerm, setSearchTerm] = useState('');
@@ -32,14 +33,14 @@ const UsersList = () => {
     return (
         <div className='card h-100 p-0 radius-12' style={{ padding: '20px' }}>
 
-            <div className='card-header '>
-                <h2>User List</h2>
+            <div className='card-header d-flex justify-content-between align-items-center'>
+                <h6 className='text-dark mb-0'>User List</h6>
                 <input
                     type="text"
                     placeholder="Search by name or email"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    style={{ padding: '8px', marginBottom: '16px', width: '300px', border: '1px solid #efefef'}}
+                    style={{ borderRadius: 8, padding: '8px', marginBottom: '16px', width: '600', border: '1px solid #efefef' }}
                 />
             </div>
 
@@ -74,6 +75,13 @@ const UsersList = () => {
                                         <td>{user.referralCode || '-'}</td>
                                         <td>{new Date(user.createdAt).toLocaleString()}</td>
                                         <td>
+                                            <Link
+                                                to={`/referral-list/${user._id}`}
+                                                className="btn btn-sm btn-primary"
+                                            >
+                                                View Referrals
+                                            </Link>
+                                            {' '}
                                             <button onClick={() => handleDelete(user._id)} style={{ color: 'red' }}>
                                                 <RiDeleteBin6Line />
                                             </button>

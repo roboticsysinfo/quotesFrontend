@@ -18,6 +18,7 @@ import RedeemProductHistoryPage from "./pages/RedeemProductHistoryPage";
 import InvoicePage from "./pages/InvoicePage";
 import UserPointsTxnHistoryPage from "./pages/UserPointsTxnHistoryPage";
 import EditQoutesPage from "./pages/EditQoutesPage";
+import UserReferralPage from "./pages/UserReferralPage";
 
 function App() {
 
@@ -90,6 +91,10 @@ function App() {
 
         <Route element={<PrivateRoute />}>
           <Route path="/edit-quote/:id" element={<EditQoutesPage />} />
+        </Route>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/referral-list/:id" element={<UserReferralPage />} />
         </Route>
 
         {/* ❌ Fallback */}

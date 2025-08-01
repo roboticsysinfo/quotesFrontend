@@ -64,6 +64,7 @@ const initialState = {
   error: null,
 };
 
+
 // ✅ Slice
 const quoteCategorySlice = createSlice({
   name: 'quoteCategories',
