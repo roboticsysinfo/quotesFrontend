@@ -27,11 +27,12 @@ const UserPointsTxnHistoryList = () => {
 
   const getBadgeClass = (type) => {
     switch (type) {
-      case 'referral': return 'bg-primary';
+      case 'referral': return 'bg-info';
       case 'redeem': return 'bg-danger';
       case 'quote': return 'bg-success';
       case 'daily_login': return 'bg-primary';
-      case 'daily_stay': return 'bg-warning'
+      case 'daily_stay': return 'bg-warning';
+      case 'daily_share': return 'bg-dark'
       default: return 'bg-secondary';
     }
   };
