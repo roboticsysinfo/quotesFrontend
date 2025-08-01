@@ -29,7 +29,9 @@ const UserPointsTxnHistoryList = () => {
     switch (type) {
       case 'referral': return 'bg-primary';
       case 'redeem': return 'bg-danger';
-      case 'quote': return 'bg-success'
+      case 'quote': return 'bg-success';
+      case 'daily_login': return 'bg-primary';
+      case 'daily_stay': return 'bg-warning'
       default: return 'bg-secondary';
     }
   };

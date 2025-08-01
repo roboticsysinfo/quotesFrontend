@@ -13,9 +13,6 @@ const UserLeaderBoard = () => {
     dispatch(fetchLeaderboard());
   }, [dispatch]);
 
-  console.log("leaderboard", leaderboard);
-
-
   return (
     <div className="container">
 
@@ -59,11 +56,20 @@ const UserLeaderBoard = () => {
                                 : `#${user.rank}`}
                         </td>
                         <td>
+
                           <img
-                            src={user?.userImage ? `${process.env.REACT_APP_UPLOADS_URL}${user?.userImage}` : "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+                            src={
+                              user?.userImage
+                                ? user.userImage.startsWith("http")
+                                  ? user.userImage
+                                  : `${process.env.REACT_APP_UPLOADS_URL}${user.userImage}`
+                                : "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                            }
                             alt="User"
                             className="user-img"
                           />
+
+
                         </td>
                         <td>{user.name}</td>
                         <td>{user.points}</td>
