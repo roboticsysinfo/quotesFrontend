@@ -19,6 +19,7 @@ import InvoicePage from "./pages/InvoicePage";
 import UserPointsTxnHistoryPage from "./pages/UserPointsTxnHistoryPage";
 import EditQoutesPage from "./pages/EditQoutesPage";
 import UserReferralPage from "./pages/UserReferralPage";
+import AdminNotificationPage from "./pages/AdminNotificationPage";
 
 function App() {
 
@@ -95,6 +96,10 @@ function App() {
 
         <Route element={<PrivateRoute />}>
           <Route path="/referral-list/:id" element={<UserReferralPage />} />
+        </Route>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/manage-notifications" element={<AdminNotificationPage />} />
         </Route>
 
         {/* ❌ Fallback */}

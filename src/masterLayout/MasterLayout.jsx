@@ -247,6 +247,20 @@ const MasterLayout = ({ children }) => {
             </li>
 
 
+            <li>
+              <NavLink
+                to='/manage-notifications'
+                className={(navData) =>
+                  navData.isActive ? "active-page" : ""
+                }
+              >
+                <i className='ri-circle-fill circle-icon text-primary-600 w-auto' />
+                  Manage Notification/Messages
+              </NavLink>
+            </li>
+
+
+
           </ul>
         </div>
       </aside>

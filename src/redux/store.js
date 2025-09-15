@@ -7,7 +7,9 @@ import userReducer from "../redux/slices/userSlice";
 import statusReducer from "../redux/slices/statusSlice";
 import quotesReducer from "../redux/slices/quotesSlice";
 import redeemProductReducer from "../redux/slices/redeemProductSlice";
-import userPointsReducer from "../redux/slices/userPointsSlice"
+import userPointsReducer from "../redux/slices/userPointsSlice";
+import adminNotificationsReducer from "../redux/slices/adminNotificationSlice"
+
 
 const store = configureStore({
 
@@ -21,7 +23,8 @@ const store = configureStore({
     status: statusReducer,
     quotes: quotesReducer,
     redeem : redeemProductReducer,
-    userPoints: userPointsReducer
+    userPoints: userPointsReducer,
+    adminNotifications: adminNotificationsReducer
   },
 
 });
